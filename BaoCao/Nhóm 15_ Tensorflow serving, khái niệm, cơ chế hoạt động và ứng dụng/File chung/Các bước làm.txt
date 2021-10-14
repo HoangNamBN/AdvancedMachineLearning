@@ -1,0 +1,24 @@
+Nó có 3 thư mục, code tương tự nhau.
+Giờ mình chạy cái Laptop để sinh ra một model để đưa lên tensorflow serving
+1.Vào command prompt cd vào thư mục Laptop
+2.Chạy câu lệnh python PricePredict.py
+3. Nhập số lượng hidden layer: ví dụ nhập là 3 tức là mạng neuron có 1 input layer, 3 hidden layer, 1 output layer
+   Nhập số lượng neuron của từng hidden layer ví dụ mình nhập 5, 6, 6
+4.Nhập số vòng training ví dụ 500
+5. Sau khi training xong bạn sẽ thấy nó thông báo: mô hình đã được lưu vào thư mục laptop_model.
+(nó tự sinh ra thư mục laptop_model chứa mô hình. Trong thư mục laptop_model số 1 nghĩa là version 1. 
+Đoạn này trong code: 
+save_path = os.path.join(os.getcwd(),'laptop_model/1/')
+print('Mo hinh da duoc luu vao thu muc ' + save_path + ' ,ban hay su dung de dua len tensorflow serving')
+tf.saved_model.save(model,save_path)
+
+6. Bắt đầu triển khai mô hình này lên tensorflow/serving.
+Bước 1: Vào windows powershell (chạy chế độ run as admin cho chắc)
+Trong powershell gõ lệnh Set-Variable -Name "TESTDATA" -Value "D:\Baitap_tensorflow\Laptop" 
+(trỏ đến thư mục chứa laptop_model)
+Bước 2: gõ lệnh: docker run -t --rm -p 8501:8501 -v "$TESTDATA/laptop_model:/models/model" -e MODEL_NAME=model tensorflow/serving
+để đưa mô hình lên tensorflow/serving cổng 8501.Nếu lệnh này nó báo cổng 8501 đã được sử dụng thì thay bằng 8502.
+Vậy là đã triển khai xong mô hình lên tensorflow/serving. 
+Bạn cứ demo cho cô giáo như vậy, để mình thử thêm bước gọi hàm predict trên server sau.
+ok nhé, thank kiu bạn, co gì mình hỏi thêm nhé.
+ok chào bạn
