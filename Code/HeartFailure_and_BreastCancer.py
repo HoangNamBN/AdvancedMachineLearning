@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import seaborn as sns
 
+
 def HeartFailure_and_BreastCancer(file_csv, classification_properties, properties):
     df = pd.read_csv(file_csv)
     print("Hiển thị 5 mẫu dữ liệu của file: \n", df.head())
@@ -65,7 +66,7 @@ def HeartFailure_and_BreastCancer(file_csv, classification_properties, propertie
     print("Hiển thị nhãn để test:\n", y_test)
 
     '''Chạy mô hình học máy: huấn luyện mô hình'''
-    models = SVC(kernel='linear', C= 1).fit(X_train, y_train)
+    models = SVC(kernel='linear', C=1).fit(X_train, y_train)
 
     '''Dự đoán mô hình'''
     y_predict = models.predict(X_test)
@@ -94,11 +95,5 @@ def HeartFailure_and_BreastCancer(file_csv, classification_properties, propertie
 
 
 if __name__ == "__main__":
-    n = str(input("Nhập vào số nguyên để chọn chạy với dữ liệu: "))
-    if n.isdigit() == True:
-        print("Bạn đang chạy với bộ dữ liệu heart_failure_clinical_records_dataset.csv")
-        HeartFailure_and_BreastCancer("heart_failure_clinical_records_dataset.csv", "DEATH_EVENT",
-                                      "creatinine_phosphokinase")
-    else:
-        print("Bạn đang chạy với bộ dữ liệu Breast_cancer_data.csv")
-        HeartFailure_and_BreastCancer("Breast_cancer_data.csv", "diagnosis", "mean_perimeter")
+    print("Bạn đang chạy với bộ dữ liệu Breast_cancer_data.csv")
+    HeartFailure_and_BreastCancer("Breast_cancer_data.csv", "diagnosis", "mean_perimeter")

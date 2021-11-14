@@ -12,12 +12,13 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.decomposition import PCA
 import warnings
+
 warnings.filterwarnings('ignore')
 
 '''load dữ liệu cho bài toán'''
 X = np.load("./Dataset/X.npy")
 y = np.load("./Dataset/Y.npy")
-print("Số mẫu của bô dữ liệu :\n", X.shape)
+print("Số mẫu của bộ dữ liệu :\n", X.shape)
 print("Nhãn dữ liệu: \n", y.shape)
 
 '''Hiển thị một số mẫu từ tập dữ liệu'''
@@ -32,18 +33,16 @@ print("Nhãn dữ liệu: \n", y.shape)
 
 '''Chia tập dữ liệu để huấn luyện'''
 '''Chuyển 2062 mẫu chuyển thành 4096 vector'''
-X = np.array(X).reshape((2062, 64*64))
+X = np.array(X).reshape((2062, 64 * 64))
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 '''Tạo mô hình mới'''
-clf = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(20, 20, 20), random_state= 1)
+clf = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(20, 20, 20), random_state=1)
 '''Cho máy học'''
 clf.fit(X_train, y_train)
 
 '''Test với bộ dữ liệu thử nghiệm X_test'''
 y_predict = clf.predict(X_test)
 '''Hiển thị độ chính xác của mô hình'''
-print("Accuracy: " + str(accuracy_score(y_test, y_predict)*100))
+print("Accuracy: " + str(accuracy_score(y_test, y_predict) * 100))
 '''=> Độ chính xác thấp dẫn đến cần phải giảm số chiều'''
-
-pca = PCA

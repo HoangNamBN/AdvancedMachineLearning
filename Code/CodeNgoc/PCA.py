@@ -5,33 +5,35 @@ import time
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 # %matplotlib inline
-#'exec(%matplotlib inline)'
+# 'exec(%matplotlib inline)'
 from IPython import get_ipython
+
 ipy = get_ipython()
 if ipy is not None:
     ipy.run_line_magic('matplotlib', 'inline')
-#PCA
+# PCA
 from sklearn.decomposition import PCA
-#TSNE
-#from sklearn.manifold import TSNE
-#UMAP
-#import umap
+
+# TSNE
+# from sklearn.manifold import TSNE
+# UMAP
+# import umap
 
 train = pd.read_csv('sign_mnist_train.csv')
 train.head()
 
 # Setting the label and the feature columns
-y = train.loc[:,'label'].values
-x = train.loc[:,'pixel1':].values
+y = train.loc[:, 'label'].values
+x = train.loc[:, 'pixel1':].values
 print(np.unique(y))
 
-#Appling PCA
+# Appling PCA
 start = time.time()
 pca = PCA(n_components=3)
 principalComponents = pca.fit_transform(x)
 print('Duration: {} seconds'.format(time.time() - start))
-principal = pd.DataFrame(data = principalComponents
-             , columns = ['principal component 1', 'principal component 2','principal component 3'])
+principal = pd.DataFrame(data=principalComponents,
+                         columns=['principal component 1', 'principal component 2', 'principal component 3'])
 principal.shape
 
 # Plotting PCA 2D
