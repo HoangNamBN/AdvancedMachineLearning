@@ -1,3 +1,4 @@
+'''Khai báo thư viện cần thiết cho bài toán'''
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
@@ -9,8 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import seaborn as sns
 
-
-def HeartFailure_and_BreastCancer(file_csv, classification_properties, properties):
+def BreastCancer(file_csv, classification_properties, properties):
     df = pd.read_csv(file_csv)
     print("Hiển thị 5 mẫu dữ liệu của file: \n", df.head())
     X = df.drop([classification_properties], axis=1)
@@ -58,8 +58,8 @@ def HeartFailure_and_BreastCancer(file_csv, classification_properties, propertie
 
     '''Chia tập dữ liệu theo tỉ lệ 8:2'''
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=35)
-    print("Số dữ liệu train", len(X_train))
-    print("Số dữ liệu test", len(X_test))
+    print("Số dữ liệu train: ", len(X_train))
+    print("Số dữ liệu test: ", len(X_test))
     print("Dữ liệu để train:\n", X_train)
     print("Nhãn dùng để train:\n", y_train)
     print("Dữ liệu dùng để test:\n", X_test)
@@ -93,7 +93,6 @@ def HeartFailure_and_BreastCancer(file_csv, classification_properties, propertie
     plt.plot()
     plt.show()
 
-
 if __name__ == "__main__":
     print("Bạn đang chạy với bộ dữ liệu Breast_cancer_data.csv")
-    HeartFailure_and_BreastCancer("Breast_cancer_data.csv", "diagnosis", "mean_perimeter")
+    BreastCancer("Breast_cancer_data.csv", "diagnosis", "mean_perimeter")
