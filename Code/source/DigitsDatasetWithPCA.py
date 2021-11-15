@@ -1,4 +1,5 @@
 '''Bài toán: Trực quan PCA với bộ dữ liệu Digits'''
+
 '''Khai báo thư viện cần thiết cho bài toán'''
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,12 +11,11 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.decomposition import PCA
 from sklearn.metrics import classification_report
 import warnings
-
 warnings.filterwarnings('ignore')
 
 '''load dữ liệu cho bài toán'''
-X = np.load("./Dataset/DigitsData/X.npy")
-Y = np.load("./Dataset/DigitsData/Y.npy")
+X = np.load("../Dataset/DigitsData/X.npy")
+Y = np.load("../Dataset/DigitsData/Y.npy")
 print("Data shape: ", X.shape)
 print(X.shape[0], "sample, ", X.shape[1], "x", X.shape[2], 'size grayscall image.\n')
 print("Labels shape: ", Y.shape)
@@ -64,7 +64,6 @@ d = np.argmax(cumsum >= 0.7) + 1
 pca = PCA(n_components= d)
 X_reduced = pca.fit_transform(X_train)
 X_recovered = pca.inverse_transform(X_reduced)
-
 print("reduced shape: " + str(X_reduced.shape))
 print("recovered shape: " + str(X_recovered.shape))
 
@@ -73,38 +72,40 @@ f = plt.figure()
 f.add_subplot(1, 2, 1)
 plt.title("Trước khi giảm chiều")
 plt.imshow(X_train[4].reshape((img_size, img_size)))
-
 f.add_subplot(1, 2, 2)
 plt.title("Sau khi giảm chiều")
 plt.imshow(X_recovered[4].reshape((img_size, img_size)))
-
 plt.show(block = True)
 
 '''Sử dụng mô hình MLPClasifier khi sử dụng giảm chiều PCA để huấn luyện'''
-clf_PCA = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(100, 100, 100, 100), random_state=1)
+clf_PCA = MLPClassifier(solver='adam', alpha=1e-5,
+            hidden_layer_sizes= (100, 100, 100, 100), random_state=1)
 start_PCA = time.time()
 clf_PCA.fit(X_reduced, Y_train)
 end_PCA = time.time()
 print("Training time is " + str(end_PCA - start_PCA) + " second using PCA")
 
-'''Chuẩn hóa dữ liệu'''
+'''Hiển thị kết quả dự đoán cũng như số lớp của bài toán'''
 X_test_PCA = pca.transform(X_test)
 y_hat_PCA = clf_PCA.predict(X_test_PCA)
 print("Kết quả dự đoán:\n", y_hat_PCA)
 # print("{}: {:.2f}%".format("Accuracy", accuracy_score(Y_test, y_hat_PCA)*100))
 print("Số lớp: ", clf_PCA.classes_)
 
-'''Đánh giá mô hình học dựa trên kết quả dự đoán (với độ đo đơn giản Accuracy, Precision, Recall)'''
+'''Đánh giá mô hình học dựa trên kết quả dự đoán 
+    (với độ đo đơn giản Accuracy, Precision, Recall)'''
 y_hat_PCA_classes = np.argmax(y_hat_PCA, axis=1)
 y_true = np.argmax(Y_test, axis=1)
 confusion_mtx = confusion_matrix(y_true, y_hat_PCA_classes)
 print("Ma trận dự doán:\n", confusion_mtx)
-print("{}: {:.2f}%".format("Accuracy Score: " , accuracy_score(y_true, y_hat_PCA_classes)*100))
+print("{}: {:.2f}%".format("Accuracy Score: " ,
+            accuracy_score(y_true, y_hat_PCA_classes)*100))
 print(classification_report(y_true, y_hat_PCA_classes))
 
 '''Vẽ ma trận dự đoán'''
 f, ax = plt.subplots(figsize=(8, 8))
-sns.heatmap(confusion_mtx, annot=True, linewidths=0.01,cmap="BuPu",linecolor="gray", fmt= '.1f',ax=ax)
+sns.heatmap(confusion_mtx, annot=True, linewidths=0.01,cmap="BuPu",
+            linecolor="gray", fmt= '.1f',ax=ax)
 plt.xlabel("Predicted Label")
 plt.ylabel("True Label")
 plt.title("Confusion Matrix")

@@ -82,6 +82,15 @@ def BreastCancer(file_csv, classification_properties, properties):
     print("Accuracy Score: ", accuracy_score(y_test, y_predict))
     print(classification_report(y_test, y_predict))
 
+    '''Vẽ ma trận dự đoán'''
+    f, ax = plt.subplots(figsize=(8, 8))
+    sns.heatmap(confusion_matrix1, annot=True, linewidths=0.01, cmap="BuPu",
+                linecolor="gray", fmt='.1f', ax=ax)
+    plt.xlabel("Predicted Label")
+    plt.ylabel("True Label")
+    plt.title("Confusion Matrix")
+    plt.show()
+
     X = df[[properties]]
     y = df[classification_properties]
     x0 = X[y == 0]
@@ -95,4 +104,4 @@ def BreastCancer(file_csv, classification_properties, properties):
 
 if __name__ == "__main__":
     print("Bạn đang chạy với bộ dữ liệu Breast_cancer_data.csv")
-    BreastCancer("Breast_cancer_data.csv", "diagnosis", "mean_perimeter")
+    BreastCancer("../Dataset/Breast_cancer_data.csv", "diagnosis", "mean_perimeter")
