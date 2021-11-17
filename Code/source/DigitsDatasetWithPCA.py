@@ -16,8 +16,11 @@ warnings.filterwarnings('ignore')
 '''load dữ liệu cho bài toán'''
 X = np.load("../Dataset/DigitsData/X.npy")
 Y = np.load("../Dataset/DigitsData/Y.npy")
+
+'''dữ liệu gồm 2062 mẫu dữ liệu, có kích thước là 64 x 64'''
 print("Data shape: ", X.shape)
 print(X.shape[0], "sample, ", X.shape[1], "x", X.shape[2], 'size grayscall image.\n')
+'''dữ liệu gồm 10 lớp: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9'''
 print("Labels shape: ", Y.shape)
 
 '''Hiển thị một số dữ liệu mẫu'''
@@ -29,7 +32,6 @@ image_index_list = [260, 900, 1800, 1600, 1400, 2061, 700, 500, 1111, 100]
 for i in range(1, n + 1):
     ax = plt.subplot(1, n, i)
     plt.imshow(X[image_index_list[i - 1]].reshape(img_size, img_size))
-    # plt.gray()
     plt.axis('off')
     title = "Sign " + str(i - 1)
     plt.title(title)
@@ -45,11 +47,11 @@ print(X_test.shape[0], 'sample,', X_test.shape[1],'size grayscale image.\n')
 
 '''Sử dụng mô hình MLPClasifier khi chưa sử dụng giảm chiều PCA để huấn luyện'''
 clf = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(100, 100, 100, 100), random_state=1)
-
 start = time.time()
 clf.fit(X_train, Y_train)
 end = time.time()
 print("Training time is " + str(end - start) + " second.")
+
 '''Dự đoán mô hình khi chưa sử dụng phương pháp giảm chiều PCA'''
 y_hat = clf.predict(X_test)
 print("{}: {:.2f}%".format("Accuracy", accuracy_score(Y_test, y_hat)*100))
@@ -89,7 +91,6 @@ print("Training time is " + str(end_PCA - start_PCA) + " second using PCA")
 X_test_PCA = pca.transform(X_test)
 y_hat_PCA = clf_PCA.predict(X_test_PCA)
 print("Kết quả dự đoán:\n", y_hat_PCA)
-# print("{}: {:.2f}%".format("Accuracy", accuracy_score(Y_test, y_hat_PCA)*100))
 print("Số lớp: ", clf_PCA.classes_)
 
 '''Đánh giá mô hình học dựa trên kết quả dự đoán 

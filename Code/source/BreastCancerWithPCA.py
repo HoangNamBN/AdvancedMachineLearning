@@ -11,6 +11,7 @@ from sklearn.decomposition import PCA
 import seaborn as sns
 
 def BreastCancer(file_csv, classification_properties, properties):
+    '''đọc file csv sử dụng thư viện panda với hàm read_csv'''
     df = pd.read_csv(file_csv)
     print("Hiển thị 5 mẫu dữ liệu của file: \n", df.head())
     X = df.drop([classification_properties], axis=1)
@@ -38,7 +39,7 @@ def BreastCancer(file_csv, classification_properties, properties):
     ax.set_ylabel('Second Principal Component')
     ax.set_zlabel('Third Principal Component')
     plt.show()
-    print("Dữ liệu sau kho giảm chiều: ", X.shape)
+    print("Dữ liệu sau khi giảm chiều: ", X.shape)
 
     '''Biểu diễn mối quan hệ giữa các thành phần chính'''
     sns.scatterplot(x=x_pca, y=z_pca, hue=y, palette='Set1')
