@@ -10,6 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import seaborn as sns
 
+
 def BreastCancer(file_csv, classification_properties, properties):
     '''đọc file csv sử dụng thư viện panda với hàm read_csv'''
     df = pd.read_csv(file_csv)
@@ -102,6 +103,7 @@ def BreastCancer(file_csv, classification_properties, properties):
     plt.ylabel(properties)
     plt.plot()
     plt.show()
+
 
 if __name__ == "__main__":
     print("Bạn đang chạy với bộ dữ liệu Breast_cancer_data.csv")
